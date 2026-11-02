@@ -1,9 +1,10 @@
 name: Build Telegram APK
 
 on:
-  push:
-    branches: [ master, main ]
+  # Убираем automatic push на master, оставляем только ручной запуск и ветку dev
   workflow_dispatch:
+  push:
+    branches: [ dev ]
 
 jobs:
   build:
