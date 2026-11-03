@@ -1,7 +1,6 @@
 name: Build Telegram APK
 
 on:
-  # Убираем automatic push на master, оставляем только ручной запуск и ветку dev
   workflow_dispatch:
   push:
     branches: [ dev ]
@@ -21,6 +20,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Setup Gradle Cache
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Install NDK 27.2.12479018
         run: |
@@ -43,4 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: TMessagesProj/build/outputs/apk/release/*.apk
+          path: |
+            **/build/outputs/apk/release/*.apk
+            **/build/outputs/apk/**/*.apk
+          if-no-files-found: error
